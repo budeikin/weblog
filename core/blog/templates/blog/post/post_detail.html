@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}
+        {{ post.tile }}
+    {% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p class="date">
+        Published {{ post.publish }} by {{ post.author }}
+    </p>
+    {{ post.body|linebreaks }}
+{% endblock %}
+</body>
+</html>

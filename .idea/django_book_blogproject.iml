@@ -11,4 +11,12 @@
     <option name="format" value="GOOGLE" />
     <option name="myDocStringFormat" value="Google" />
   </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Django" />
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/core/blog/templates" />
+      </list>
+    </option>
+  </component>
 </module>

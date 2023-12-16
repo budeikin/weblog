@@ -5,7 +5,9 @@ from django.views.generic import ListView, DetailView
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
+from django.db.models import Count
 from taggit.models import Tag
+
 
 # Create your views here.
 # class PostListView(ListView):
@@ -20,8 +22,6 @@ from taggit.models import Tag
 #         else:
 #             queryset = Post.published.all()
 #         return queryset
-
-from taggit.models import Tag
 
 
 def post_list(request, tag_slug=None):
@@ -74,6 +74,10 @@ class PostDetailView(DetailView):
         context = super().get_context_data()
         context['comments'] = self.get_object().comments.filter(active=True)
         context['form'] = CommentForm()
+        post_tags_ids = self.object.tags.values_list('id', flat=True)
+        similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=self.object.id)
+        similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
+        context['similar_posts'] = similar_posts
         return context
 
 

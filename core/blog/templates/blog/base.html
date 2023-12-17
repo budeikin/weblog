@@ -1,4 +1,5 @@
 {% load static %}
+{% load blog_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,19 @@
 <div id="sidebar">
     <p>Mohammad Hossein</p>
     <p>This is my blog.</p>
+    <p>I've written {% total_posts %} posts so far</p>
+    <h3>Latest Posts</h3>
+    {% recent_posts 3 %}
+    <hr>
+    <h3>Most Commended Posts</h3>
+    {% get_most_commented_posts as most_commented_posts %}
+    {% for post in most_commented_posts %}
+        <a href="{{ post.get_absolute_url }}"><p>{{ post.title }}</p></a>
+    {% endfor %}
+
+    <hr>
+    <a href="http://127.0.0.1:8000/blog/">home</a><br><br>
+    <a href="http://127.0.0.1:8000/admin/">admin</a>
 </div>
 </body>
 </html>

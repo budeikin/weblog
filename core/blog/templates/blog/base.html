@@ -22,9 +22,9 @@
     {% recent_posts 3 %}
     <hr>
     <h3>Most Commended Posts</h3>
-    {% get_most_commented_posts as most_commented_posts %}
+    {% get_most_commended_posts as most_commented_posts %}
     {% for post in most_commented_posts %}
-        <a href="{{ post.get_absolute_url }}"><p>{{ post.title }}</p></a>
+        <a href="{{ post.get_absolute_url }}"><p>{{ post.title|title }}</p></a>
     {% endfor %}
 
     <hr>

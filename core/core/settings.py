@@ -37,12 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # internal modules
-    'blog.apps.BlogConfig',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    # external modules
-    'taggit'
+    'django.contrib.postgres',
+    'taggit',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [

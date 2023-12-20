@@ -1,0 +1,48 @@
+{% extends 'blog/base.html' %}
+{% load blog_tags %}
+{% block title %}
+    search results for {{ query }}
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% if query %}
+            <h1>results for "{{ query }}"</h1>
+            <h3>
+                {% with results.count as total_results %}
+                    Found {{ total_results }} result{{ total_results|pluralize }}
+                {% endwith %}
+            </h3>
+
+            {% for post in results %}
+                <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a> <br>
+                <p class="tags">
+                    Tags:
+                    {% for tag in post.tags.all %}
+                        <a href="{% url "blog:post_list_by_tag" tag.slug %}">
+                            {{ tag.name }}
+                        </a>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="date">
+                    Published {{ post.publish }} by {{ post.author }}
+                </p>
+                {{ post.body|markdown|truncatewords:30 }}
+
+                <hr>
+            {% empty %}
+                <h3>there is no results for "{{ query }}"</h3>
+                <a href="{% url 'blog:post_search' %}">search again</a>
+            {% endfor %}
+
+        {% else %}
+            <form action="{% url 'blog:post_search' %}" method="get">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="search">
+            </form>
+        {% endif %}
+
+    </div>
+{% endblock %}
